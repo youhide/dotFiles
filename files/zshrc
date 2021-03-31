@@ -15,5 +15,9 @@ if type brew &>/dev/null; then
 fi
 
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source <(kubectl completion zsh)
 
 echo ${GREEN}${YODA}${NOCOLOR} 
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/terraform terraform
