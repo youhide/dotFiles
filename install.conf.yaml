@@ -8,6 +8,7 @@
     ~/.tmux.conf: files/tmux.conf
     ~/.zshrc: files/zshrc
     ~/.vimrc: files/vimrc
+    ~/.hushlogin: files/hushlogin
 
 #- create:
 #    - ~/downloads
