@@ -1,8 +1,15 @@
+case $- in *i*)
+    if [ -z "$TMUX" ]
+    then
+        tmux attach -t 0 || tmux new -s 0
+    fi
+esac
 
 #### FIG ENV VARIABLES ####
 # Please make sure this block is at the start of this file.
 [ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
 #### END FIG ENV VARIABLES ####
+
 RED="\033[1;31m"
 GREEN="\033[1;32m"
 NOCOLOR="\033[0m"
