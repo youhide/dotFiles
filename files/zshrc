@@ -1,9 +1,9 @@
-case $- in *i*)
-    if [ -z "$TMUX" ]
-    then
-        tmux attach -t 0 || tmux new -s 0
-    fi
-esac
+# case $- in *i*)
+#     if [ -z "$TMUX" ]
+#     then
+#         tmux attach -t 0 || tmux new -s 0
+#     fi
+# esac
 
 #### FIG ENV VARIABLES ####
 # Please make sure this block is at the start of this file.
