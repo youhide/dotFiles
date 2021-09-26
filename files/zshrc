@@ -1,7 +1,8 @@
 # case $- in *i*)
 #     if [ -z "$TMUX" ]
 #     then
-#         tmux attach -t 0 || tmux new -s 0
+#         # tmux attach -t 0 || tmux new -s 0
+#         tmux attach
 #     fi
 # esac
 
@@ -28,6 +29,17 @@ fi
 
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source <(kubectl completion zsh)
+
+echo ${GREEN}
+cat << "EOF"
+  .__    .__    .___     ________          __   
+  |  |__ |__| __| _/____ \_____  \  __ ___/  |_ 
+  |  |  \|  |/ __ |/ __ \ /   |   \|  |  \   __\
+  |   Y  \  / /_/ \  ___//    |    \  |  /|  |  
+  |___|  /__\____ |\___  >_______  /____/ |__|  
+       \/        \/    \/        \/        
+EOF
+echo ${NOCOLOR}
 
 echo ${GREEN}${YODA}${NOCOLOR} 
 
