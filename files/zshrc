@@ -1,15 +1,12 @@
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # case $- in *i*)
 #     if [ -z "$TMUX" ]
 #     then
 #         # tmux attach -t 0 || tmux new -s 0
-#         tmux attach
+#         exec tmux attach
 #     fi
 # esac
-
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the start of this file.
-[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
-#### END FIG ENV VARIABLES ####
 
 RED="\033[1;31m"
 GREEN="\033[1;32m"
@@ -20,17 +17,21 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff00ff,bg=244,bold,underline"
 
 YODA=$(yoda-quotes)
 
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 
   autoload -Uz compinit
   compinit
 fi
 
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source <(kubectl completion zsh)
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
 echo ${GREEN}
+
 cat << "EOF"
   .__    .__    .___     ________          __   
   |  |__ |__| __| _/____ \_____  \  __ ___/  |_ 
@@ -43,10 +44,5 @@ echo ${NOCOLOR}
 
 echo ${GREEN}${YODA}${NOCOLOR} 
 
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/local/bin/terraform terraform
-
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the end of this file.
-[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
-#### END FIG ENV VARIABLES ####
+setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+source ~/.dotfiles/files/git-prompt.sh
