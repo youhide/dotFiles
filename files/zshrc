@@ -1,3 +1,5 @@
+source ~/.dotFiles/files/oh-my-zsh
+
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # case $- in *i*)
@@ -13,7 +15,6 @@ GREEN="\033[1;32m"
 NOCOLOR="\033[0m"
 
 ZSH_AUTOSUGGEST_USE_ASYNC=1
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff00ff,bg=244,bold,underline"
 
 YODA=$(yoda-quotes)
 
@@ -43,7 +44,3 @@ EOF
 echo ${NOCOLOR}
 
 echo ${GREEN}${YODA}${NOCOLOR} 
-
-setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
-source ~/.dotfiles/files/git-prompt.sh
-
