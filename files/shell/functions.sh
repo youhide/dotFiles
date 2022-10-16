@@ -1,5 +1,5 @@
 hideascii() {
-echo ${PURPLE}
+echo ${GREEN}
 cat << "EOF"
   .__    .__    .___     ________          __   
   |  |__ |__| __| _/____ \_____  \  __ ___/  |_ 
@@ -12,5 +12,5 @@ echo ${NOCOLOR}
 }
 
 yodaquote() {
-    echo ${GREEN}$(yoda-quotes)${NOCOLOR} 
+    echo ${PURPLE}$(yoda-quotes)${NOCOLOR} 
 }
