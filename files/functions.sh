@@ -1,0 +1,3 @@
+asd() {
+    echo "asd"
+}
