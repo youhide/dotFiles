@@ -31,6 +31,8 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
 echo ${GREEN}
 
 cat << "EOF"
@@ -44,3 +46,4 @@ EOF
 echo ${NOCOLOR}
 
 echo ${GREEN}${YODA}${NOCOLOR} 
+
