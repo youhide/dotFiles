@@ -1,3 +1,0 @@
-asd() {
-    echo "asd"
-}

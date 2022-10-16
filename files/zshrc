@@ -1,50 +1,6 @@
-source ~/.dotFiles/files/oh-my-zsh.sh
-source ~/.dotFiles/files/functions.sh
+source ~/.dotFiles/files/shell/imports.sh
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+hideascii
 
-# case $- in *i*)
-#     if [ -z "$TMUX" ]
-#     then
-#         # tmux attach -t 0 || tmux new -s 0
-#         exec tmux attach
-#     fi
-# esac
-
-RED="\033[1;31m"
-GREEN="\033[1;32m"
-NOCOLOR="\033[0m"
-
-ZSH_AUTOSUGGEST_USE_ASYNC=1
-
-YODA=$(yoda-quotes)
-
-if type brew &>/dev/null
-then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-
-  autoload -Uz compinit
-  compinit
-fi
-
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /opt/homebrew/bin/terraform terraform
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-echo ${GREEN}
-
-cat << "EOF"
-  .__    .__    .___     ________          __   
-  |  |__ |__| __| _/____ \_____  \  __ ___/  |_ 
-  |  |  \|  |/ __ |/ __ \ /   |   \|  |  \   __\
-  |   Y  \  / /_/ \  ___//    |    \  |  /|  |  
-  |___|  /__\____ |\___  >_______  /____/ |__|  
-       \/        \/    \/        \/        
-EOF
-echo ${NOCOLOR}
-
-echo ${GREEN}${YODA}${NOCOLOR} 
+yodaquote
 
