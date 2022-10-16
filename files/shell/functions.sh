@@ -12,5 +12,5 @@ echo ${NOCOLOR}
 }
 
 yodaquote() {
-    echo ${PURPLE}$(yoda-quotes)${NOCOLOR} 
+  echo ${PURPLE}$(yoda-quotes)${NOCOLOR} 
 }
