@@ -1,25 +1,16 @@
 - defaults:
     link:
       relink: true
+      force: true 
 
 - clean: ['~']
 
 - link:
-    ~/.tmux.conf: 
-      path: files/tmux.conf
-      force: true       
-    ~/.zshrc: 
-      path: files/zshrc
-      force: true       
-    ~/.vimrc:
-      path: files/vimrc
-      force: true       
-    ~/.npmrc: 
-      path: files/npmrc
-      force: true    
-    ~/.hushlogin: 
-      path: files/hushlogin
-      force: true       
+    ~/.tmux.conf: files/tmux.conf      
+    ~/.zshrc: files/zshrc      
+    ~/.vimrc: files/vimrc      
+    ~/.npmrc: files/npmrc   
+    ~/.hushlogin: files/hushlogin      
 
 #- create:
 #    - ~/downloads
