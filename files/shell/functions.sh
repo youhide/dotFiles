@@ -19,7 +19,7 @@ function awsuse() {
   if [ -z "$1" ]; then
     echo "No environment supplied"
   else
-    if grep -q "\[profile $1\]" ~/.aws/config; then
+    if findStringInFile ~/.aws/config $1; then
       export AWS_PROFILE=${1}
       echo "AWS command line environment set to ${GREEN}[${1}]${NOCOLOR}"
     else
@@ -34,4 +34,22 @@ function awsuse() {
 function awsclear() {
   unset AWS_PROFILE
   echo "AWS command line environment cleared."
+}
+
+function findStringInFile() {
+  if [ -z "$1" ]; then
+    echo "No file supplied"
+  else
+    if [ -z "$2" ]; then
+      echo "No string supplied"
+    else
+      if grep -q "$2" $1; then
+        echo "Found ${GREEN}$2${NOCOLOR} in ${YELLOW}$1${NOCOLOR}"
+        return 0
+      else
+        echo "Did not find ${RED}$2${NOCOLOR} in ${RED}$1${NOCOLOR}"
+        return 1
+      fi
+    fi
+  fi
 }
