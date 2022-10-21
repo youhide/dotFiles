@@ -21,9 +21,9 @@ function awsuse() {
   else
     if grep -q "\[profile $1\]" ~/.aws/config; then
       export AWS_PROFILE=${1}
-      echo "AWS command line environment set to [${1}]"
+      echo "AWS command line environment set to ${GREEN}[${1}]${NOCOLOR}"
     else
-      echo "AWS profile [${1}] not found."
+      echo "AWS profile ${RED}[${1}]${NOCOLOR} not found."
       echo "Please choose from an existing profile:"
       grep "\[profile" ~/.aws/config
       echo "Or create a new one."
