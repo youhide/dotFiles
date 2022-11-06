@@ -22,6 +22,7 @@ function awsuse() {
     if findStringInFile ~/.aws/config $1; then
       export AWS_PROFILE=${1}
       echo "AWS command line environment set to ${GREEN}[${1}]${NOCOLOR}"
+      aws sso login
     else
       echo "AWS profile ${RED}[${1}]${NOCOLOR} not found."
       echo "Please choose from an existing profile:"
@@ -34,6 +35,8 @@ function awsuse() {
 function awsclear() {
   unset AWS_PROFILE
   echo "AWS command line environment cleared."
+  aws sso logout
+  echo "AWS SSO session cleared."
 }
 
 function findStringInFile() {
