@@ -1,4 +1,6 @@
-source ~/.dotFiles/files/shell/imports.sh
+for FILE in ~/.dotFiles/files/shell/*.sh; do
+  source $FILE
+done
 
 hideascii
 
