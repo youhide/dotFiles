@@ -4,3 +4,5 @@ then
 else
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+
+PATH="$(python3 -m site --user-base)/bin:${PATH}"
