@@ -1,3 +1,1 @@
-export NEXUS_USER=${NEXUS_USER}
-export NEXUS_PASS=${NEXUS_PASS}
-export NPM_TOKEN=${NPM_TOKEN}
+
