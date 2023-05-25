@@ -7,7 +7,8 @@
 
 - link:
     ~/.tmux.conf: files/tmux.conf      
-    ~/.zshrc: files/zshrc      
+    ~/.zshrc: files/zshrc 
+    ~/.zprofile: files/zprofile     
     ~/.vimrc: files/vimrc      
     ~/.npmrc: files/npmrc   
     ~/.hushlogin: files/hushlogin      
