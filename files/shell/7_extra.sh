@@ -16,6 +16,6 @@ if [[ -f ${HOME}/.fortis_vault_pass.txt ]]; then
 fi
 
 # powerline
-if [ -f `which powerline-daemon` ]; then
+if [[ -f `which powerline-daemon` ]]; then
   . /usr/share/powerline/zsh/powerline.zsh
 fi

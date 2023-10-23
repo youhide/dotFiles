@@ -4,7 +4,7 @@ then
 else
   case "$OSTYPE" in
     linux*)   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" ;;
-    darwin*)  eval "$($(brew --prefix)/bin/brew shellenv)" || eval "$(/opt/homebrew/bin/brew shellenv)" ;; 
+    darwin*)  eval "$(/opt/homebrew/bin/brew shellenv)" ;; 
     win*)     echo "Windows" ;;
     *)        echo "unknown: $OSTYPE" ;;
   esac
