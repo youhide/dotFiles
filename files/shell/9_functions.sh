@@ -42,9 +42,39 @@ function findStringInFile() {
 
 function update() {
   case "$OSTYPE" in
-    linux*)   update-brew && update-dnf ;;
+    linux*)   update-brew && updateLinux ;;
     darwin*)  update-brew ;; 
     win*)     echo "Windows" ;;
     *)        echo "unknown: $OSTYPE" ;;
   esac
+}
+
+function detectLinuxDistribution() {
+  if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    echo $NAME
+  elif type lsb_release >/dev/null 2>&1; then
+    lsb_release -si
+  elif [ -f /etc/lsb-release ]; then
+    . /etc/lsb-release
+    echo $DISTRIB_ID
+  elif [ -f /etc/debian_version ]; then
+    echo Debian
+  elif [ -f /etc/fedora-release ]; then
+    echo Fedora
+  elif [ -f /etc/redhat-release ]; then
+    echo Red Hat Enterprise Linux
+  else
+    echo "Unsupported distribution"
+  fi
+}
+
+function updateLinux() {
+  if [[ "$(detectLinuxDistribution)" == *"Ubuntu"* ]]; then
+    update-apt
+  elif [[ "$(detectLinuxDistribution)" == *"Fedora"* ]]; then
+    update-dnf
+  else
+    echo "Unsupported OS"
+  fi
 }

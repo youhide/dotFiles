@@ -73,9 +73,10 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git kubectl)
 
-source $ZSH/oh-my-zsh.sh
-
 # User configuration
+
+# CUSTOM
+ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -100,3 +101,5 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+source $ZSH/oh-my-zsh.sh
