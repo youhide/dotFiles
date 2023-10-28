@@ -42,7 +42,7 @@ function findStringInFile() {
 
 function update() {
   case "$OSTYPE" in
-    linux*)   update-brew && updateLinux ;;
+    linux*)   updateLinux && update-brew ;;
     darwin*)  update-brew ;; 
     win*)     echo "Windows" ;;
     *)        echo "unknown: $OSTYPE" ;;
