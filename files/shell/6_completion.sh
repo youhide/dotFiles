@@ -10,3 +10,4 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C $(brew --prefix)/bin/terraform terraform
+complete -o nospace -C /usr/local/bin/tofu tofu
