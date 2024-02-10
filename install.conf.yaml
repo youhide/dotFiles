@@ -17,5 +17,10 @@
 #    - ~/downloads
 #    - ~/.vim/undo-history
 
+- git:
+    '~/.password-store':
+        url: 'git@github.com:youhide/dotSecrets.git'
+        description: 'dotSecrets'
+
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
