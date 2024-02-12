@@ -13,9 +13,8 @@
     ~/.npmrc: files/npmrc   
     ~/.hushlogin: files/hushlogin      
 
-#- create:
-#    - ~/downloads
-#    - ~/.vim/undo-history
+- create:
+   - ~/Git
 
 - git:
     '~/.password-store':
