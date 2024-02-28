@@ -11,6 +11,20 @@ EOF
 echo ${NOCOLOR}
 }
 
-function yodaquote() {
-  echo ${PURPLE}$(yoda-quotes)${NOCOLOR} 
+function startphrase() {
+  # target file
+  file=~/.dotFiles/files/phrases.md
+
+  # count lines (number of phrases)
+  COUNT=$(wc -l < "$file")
+
+  # Generate a random number using bash RANDOM and modulo operation
+  RANDPHRASE=$(( RANDOM % COUNT + 1 ))
+
+  # echo "phrase number: $RANDPHRASE"
+
+  PHRASE=$(sed -n "${RANDPHRASE}p" $file)
+
+  # print the line number "RANDPHRASE"
+  echo ${PURPLE}${PHRASE}${NOCOLOR}
 }
