@@ -221,6 +221,8 @@
 	<string>B75CD8A2-D7C6-4A47-AD95-83CB68C35210</string>
 	<key>DisableFullscreenTransparency</key>
 	<true/>
+	<key>DisableTransparencyForKeyWindow</key>
+	<false/>
 	<key>EnableAPIServer</key>
 	<true/>
 	<key>EnableProxyIcon</key>
