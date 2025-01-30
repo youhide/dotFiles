@@ -9,9 +9,4 @@ if which pass >/dev/null; then
     export TF_VAR_proxmox_api_token_id=$(pass hideOut/Terraform/Proxmox/token_id)
     export TF_VAR_proxmox_api_token_secret=$(pass hideOut/Terraform/Proxmox/token_secret)
 
-    # Fortis Games
-    export NEXUS_USER=$(pass Fortis/Nexus/user)
-    export NEXUS_PASS=$(pass Fortis/Nexus/pass)
-    export NPM_TOKEN=$(pass Fortis/Nexus/NPM_Token)
-
 fi

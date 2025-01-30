@@ -7,8 +7,3 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 #         exec tmux attach
 #     fi
 # esac
-
-# ansible vault pw
-if [[ -f ${HOME}/.fortis_vault_pass.txt ]]; then
-  export ANSIBLE_VAULT_PASSWORD_FILE=${HOME}/.fortis_vault_pass.txt
-fi

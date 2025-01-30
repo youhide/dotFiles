@@ -1,2 +1,0 @@
-@fortis:registry=https://nexus.infra-area1.com/repository/npmjs/
-//nexus.infra-area1.com/repository/npmjs/:_authToken=${NPM_TOKEN}
