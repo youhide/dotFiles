@@ -1,25 +1,25 @@
 - defaults:
     link:
       relink: true
-      force: true 
+      force: true
 
-- clean: ['~']
+- clean: ["~"]
 
 - link:
-    ~/.tmux.conf: files/tmux.conf      
-    ~/.zshrc: files/zshrc 
-    ~/.zprofile: files/zprofile     
-    ~/.vimrc: files/vimrc      
-    ~/.npmrc: files/npmrc   
-    ~/.hushlogin: files/hushlogin      
+    ~/.tmux.conf: files/tmux.conf
+    ~/.zshrc: files/zshrc
+    ~/.zprofile: files/zprofile
+    ~/.vimrc: files/vimrc
+    ~/.npmrc: files/npmrc
+    ~/.hushlogin: files/hushlogin
 
 - create:
-   - ~/Git
+    - ~/Git
 
 - git:
-    '~/.password-store':
-        url: 'git@github.com:youhide/dotSecrets.git'
-        description: 'dotSecrets'
+    "~/.password-store":
+      url: "git@github.com:youhide/dotSecrets.git"
+      description: "dotSecrets"
 
 - shell:
-  - [git submodule update --init --recursive, Installing submodules]
+    - [echo hi, Test shell]
