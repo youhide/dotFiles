@@ -1,34 +1,22 @@
-## My Dotfile Repository
+# dotFiles
 
-This repository contains my personal dotfiles for configuring various tools and applications on my system.
+Personal dotFiles managed with [hideDot](https://github.com/youhide/hideDot).
 
-### Installation
+## Install
 
-To install these dotfiles on a new system, follow these steps:
+```bash
+brew tap youhide/homebrew-youhide
+brew install hidedot
 
-1. Clone the repository to your home directory:
+git clone https://github.com/youhide/dotFiles.git ~/.dotFiles
+cd ~/.dotFiles
+hidedot --dry-run
+```
 
-   ```
-   git clone https://github.com/{{username}}/dotfiles.git ~/.dotfiles
-   ```
+## Requirements
 
-2. Run the installation script:
+- [hideDot](https://github.com/youhide/hideDot)
 
-   ```
-   cd ~/.dotfiles
-   ./install.sh
-   ```
+## License
 
-   This will create symbolic links from the dotfiles in this repository to their respective locations in your home directory.
-
-### Contents
-
-This repository includes dotfiles for the following tools and applications:
-
-- Bash
-- Git
-- Vim
-
-### Customization
-
-Feel free to fork this repository and customize the dotfiles to your liking. If you come up with any improvements or additions, I'd love to hear about them!
+MIT © [Youri T. K. K. Mattar](https://github.com/youhide)
