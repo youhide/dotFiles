@@ -11,7 +11,10 @@ if which pass >/dev/null; then
     export MINIO_USER=$(pass hideOut/OpenMediaVault/s3/user)
     export MINIO_PASSWORD=$(pass hideOut/OpenMediaVault/s3/pass)   
      
-    export TF_VAR_s3_access_key=$(pass hideOut/OpenMediaVault/s3/access_key)
-    export TF_VAR_s3_secret_key=$(pass hideOut/OpenMediaVault/s3/secret_key)
+    export AWS_ACCESS_KEY_ID=$(pass hideOut/OpenMediaVault/s3/access_key)
+    export AWS_SECRET_ACCESS_KEY=$(pass hideOut/OpenMediaVault/s3/secret_key)
+
+    export VAULT_TOKEN=$(pass hideOut/Vault/root_token)
+    export VAULT_UNSEAL_KEY=$(pass show hideOut/Vault/unseal_key)
 
 fi
