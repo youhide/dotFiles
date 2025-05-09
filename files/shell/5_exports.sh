@@ -19,4 +19,7 @@ if which pass >/dev/null; then
     export AUTHENTIK_URL=$(pass TKA/Authentik/url)
     export AUTHENTIK_TOKEN=$(pass TKA/Authentik/token)
 
+    export CLOUDFLARE_API_KEY=$(pass hideOut/CloudFlare/api_key)
+    export CLOUDFLARE_API_TOKEN=$(pass hideOut/CloudFlare/api_token)
+
 fi
