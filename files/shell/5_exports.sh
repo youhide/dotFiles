@@ -1,3 +1,5 @@
+export KUBE_CONFIG_PATH="${HOME}/.kube/config"
+
 if which pass >/dev/null; then
 
     #PM_USER=$(pass hideOut/Terraform/Proxmox/user)
