@@ -18,8 +18,8 @@ if which pass >/dev/null; then
     export VAULT_UNSEAL_KEY=$(pass show hideOut/Vault/unseal_key)
     export VAULT_ADDR=$(pass show hideOut/Vault/addr)
 
-    export AUTHENTIK_URL=$(pass TKA/Authentik/url)
-    export AUTHENTIK_TOKEN=$(pass TKA/Authentik/token)
+    # export AUTHENTIK_URL=$(pass TKA/Authentik/url)
+    # export AUTHENTIK_TOKEN=$(pass TKA/Authentik/token)
 
     export CLOUDFLARE_API_TOKEN=$(pass hideOut/CloudFlare/api_token)
 
