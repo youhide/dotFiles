@@ -24,3 +24,9 @@ if which pass >/dev/null; then
     export CLOUDFLARE_API_TOKEN=$(pass hideOut/CloudFlare/api_token)
 
 fi
+
+if [ -d "$HOMEBREW_CELLAR/nvm" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"  # This loads nvm
+    [ -s "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$HOMEBREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+fi
