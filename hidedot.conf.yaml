@@ -1,23 +1,38 @@
 - defaults:
-    link:
-      relink: true
-      force: true
+      link:
+          relink: true
+          force: true
+          backup: false # Enable automatic backups
 
-- link:
-    ~/.tmux.conf: ~/.dotFiles/files/tmux.conf
-    ~/.zshrc: ~/.dotFiles/files/zshrc
-    ~/.zprofile: ~/.dotFiles/files/zprofile
-    ~/.vimrc: ~/.dotFiles/files/vimrc
-    ~/.npmrc: ~/.dotFiles/files/npmrc
-    ~/.hushlogin: ~/.dotFiles/files/hushlogin
+  # Optional: profile for filtering configs
+  profile: personal
 
-- create:
-    - ~/Git
+  # Create directories
+  create:
+      - ~/Git
 
-- git:
-    "~/.password-store":
-      url: "git@github.com:youhide/dotSecrets.git"
-      description: "dotSecrets"
+  # Manage symlinks
+  link:
+      ~/.tmux.conf: ~/.dotFiles/files/tmux.conf
+      ~/.zshrc: ~/.dotFiles/files/zshrc
+      ~/.zprofile: ~/.dotFiles/files/zprofile
+      ~/.vimrc: ~/.dotFiles/files/vimrc
+      ~/.npmrc: ~/.dotFiles/files/npmrc
+      ~/.hushlogin: ~/.dotFiles/files/hushlogin
 
-- shell:
-    - [echo hi, Test shell]
+  # Clone git repositories
+  git:
+      "~/.password-store":
+          url: "git@github.com:youhide/dotSecrets.git"
+          description: "dotSecrets"
+
+  # Run shell commands
+  shell:
+      - [echo hi, Test shell]
+
+  # Hooks for custom actions
+  hooks:
+      pre_link:
+          - echo "Starting link process..."
+      post_link:
+          - echo "Links created successfully!"
