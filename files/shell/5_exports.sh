@@ -23,6 +23,8 @@ if which pass >/dev/null; then
 
     export CLOUDFLARE_API_TOKEN=$(pass hideOut/CloudFlare/api_token)
 
+    export NPM_TOKEN=$(pass hideOut/NPM/token)
+
 fi
 
 if [ -d "$HOMEBREW_CELLAR/nvm" ]; then

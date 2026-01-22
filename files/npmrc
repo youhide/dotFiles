@@ -1,0 +1,2 @@
+@postrite:registry=https://verdaccio.youhide.com.br/
+//verdaccio.youhide.com.br/:_auth=${NPM_TOKEN}
