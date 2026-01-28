@@ -1,2 +1,3 @@
 @postrite:registry=https://verdaccio.youhide.com.br/
-//verdaccio.youhide.com.br/:_auth=${NPM_TOKEN}
+//verdaccio.youhide.com.br/:_auth=${NPM_TOKEN_YOUHIDE}
+//registry.npmjs.org/:_authToken=n${NPM_TOKEN}
