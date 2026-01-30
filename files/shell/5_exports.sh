@@ -23,8 +23,9 @@ if which pass >/dev/null; then
 
     export CLOUDFLARE_API_TOKEN=$(pass hideOut/CloudFlare/api_token)
 
-    export NPM_TOKEN=$(pass hideOut/NPM/token)
+    export NPM_TOKEN=$(pass hideOut/NPM/youHide/token)
     export NPM_TOKEN_YOUHIDE=$(pass hideOut/NPM/youHide/token)
+    export NPM_TOKEN_NPM=$(pass hideOut/NPM/token)
 
 fi
 
