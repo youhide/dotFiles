@@ -18,7 +18,6 @@ alias glog="git log --oneline --graph --decorate -15"
 # TOOLS
 alias tf="terraform"
 alias tg="terragrunt"
-alias cat="bat --paging=never 2>/dev/null || cat"
 
 # SHORTCUTS
 alias reload="source ~/.zshrc"
