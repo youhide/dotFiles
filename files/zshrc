@@ -1,5 +1,5 @@
 for FILE in ~/.dotFiles/files/shell/*.sh; do
-  source $FILE
+  source "$FILE"
 done
 
 hideascii

@@ -1,3 +1,4 @@
 @postrite:registry=https://verdaccio.youhide.com.br/
 //verdaccio.youhide.com.br/:_auth=${NPM_TOKEN_YOUHIDE}
-//registry.npmjs.org/:_authToken=n${NPM_TOKEN_NPM}
+//registry.npmjs.org/:_authToken=${NPM_TOKEN_NPM}
+# NOTE: Tokens are lazy loaded. Run `load_secrets` before npm publish/install from private registries.
