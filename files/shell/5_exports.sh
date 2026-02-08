@@ -1,4 +1,5 @@
 export KUBE_CONFIG_PATH="${HOME}/.kube/config"
+export SOPS_AGE_KEY_FILE="${HOME}/.config/sops/age/keys.txt"
 
 # --- Secrets Management (lazy loaded via `pass`) ---
 # Define secrets as "ENV_VAR:pass/path" pairs
