@@ -241,6 +241,8 @@
 	</dict>
 	<key>Default Bookmark Guid</key>
 	<string>B75CD8A2-D7C6-4A47-AD95-83CB68C35210</string>
+	<key>Default Browser Profile Guid</key>
+	<string>B75CD8A2-D7C6-4A47-AD95-83CB68C35210</string>
 	<key>DisableFullscreenTransparency</key>
 	<true/>
 	<key>DisableTransparencyForKeyWindow</key>
@@ -262,6 +264,10 @@
 			<true/>
 			<key>Ambiguous Double Width</key>
 			<false/>
+			<key>Animate Movement</key>
+			<false/>
+			<key>Animate Movement Only in Interactive Apps</key>
+			<true/>
 			<key>Ansi 0 Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -477,6 +483,10 @@
 				<key>Red Component</key>
 				<real>0.70214027166366577</real>
 			</dict>
+			<key>Cursor Hidden When Unfocused</key>
+			<false/>
+			<key>Cursor Shadow</key>
+			<false/>
 			<key>Cursor Text Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -486,10 +496,16 @@
 				<key>Red Component</key>
 				<real>1</real>
 			</dict>
+			<key>Cursor Type</key>
+			<integer>0</integer>
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
 			<string>No</string>
+			<key>Custom Icon Path</key>
+			<string>/Users/youri/Library/Mobile Documents/com~apple~CloudDocs/Documents/Icons/utilities-terminal-icon_37688.png</string>
+			<key>Custom Locale</key>
+			<string>en_US.UTF-8</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>
@@ -511,6 +527,8 @@
 			<string>B75CD8A2-D7C6-4A47-AD95-83CB68C35210</string>
 			<key>Horizontal Spacing</key>
 			<real>1</real>
+			<key>Icon</key>
+			<integer>1</integer>
 			<key>Idle Code</key>
 			<integer>0</integer>
 			<key>Jobs to Ignore</key>
@@ -755,6 +773,8 @@
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
+			<key>Set Local Environment Vars</key>
+			<integer>2</integer>
 			<key>Shortcut</key>
 			<string></string>
 			<key>Silence Bell</key>
@@ -773,6 +793,8 @@
 			<true/>
 			<key>Use Bright Bold</key>
 			<true/>
+			<key>Use Custom Tab Title</key>
+			<false/>
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
