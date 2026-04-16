@@ -61,19 +61,25 @@ function list_secrets() {
   done
 }
 
-# --- Lazy load NVM ---
+# --- NVM (lazy load for interactive, eager for non-interactive/VS Code) ---
 if [[ -d "${BREW_PREFIX:-}/opt/nvm" ]]; then
   export NVM_DIR="$HOME/.nvm"
 
   _load_nvm() {
-    unset -f nvm node npm npx pnpm _load_nvm
+    unset -f nvm node npm npx pnpm _load_nvm 2>/dev/null
     [ -s "${BREW_PREFIX}/opt/nvm/nvm.sh" ] && \. "${BREW_PREFIX}/opt/nvm/nvm.sh"
     [ -s "${BREW_PREFIX}/opt/nvm/etc/bash_completion.d/nvm" ] && \. "${BREW_PREFIX}/opt/nvm/etc/bash_completion.d/nvm"
   }
 
-  nvm()  { _load_nvm; nvm  "$@"; }
-  node() { _load_nvm; node "$@"; }
-  npm()  { _load_nvm; npm  "$@"; }
-  npx()  { _load_nvm; npx  "$@"; }
-  pnpm() { _load_nvm; pnpm "$@"; }
+  if [[ -n "$VSCODE_RESOLVING_ENVIRONMENT" || "$TERM_PROGRAM" == "vscode" || ! -o interactive ]]; then
+    # Non-interactive shell or VS Code: load NVM eagerly so tools find node/npx/etc
+    _load_nvm
+  else
+    # Interactive shell: lazy load for faster startup
+    nvm()  { _load_nvm; nvm  "$@"; }
+    node() { _load_nvm; node "$@"; }
+    npm()  { _load_nvm; npm  "$@"; }
+    npx()  { _load_nvm; npx  "$@"; }
+    pnpm() { _load_nvm; pnpm "$@"; }
+  fi
 fi
