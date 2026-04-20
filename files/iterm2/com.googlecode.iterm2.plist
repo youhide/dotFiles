@@ -243,6 +243,12 @@
 	<string>B75CD8A2-D7C6-4A47-AD95-83CB68C35210</string>
 	<key>Default Browser Profile Guid</key>
 	<string>B75CD8A2-D7C6-4A47-AD95-83CB68C35210</string>
+	<key>DimBackgroundWindows</key>
+	<false/>
+	<key>DimInactiveSplitPanes</key>
+	<true/>
+	<key>DimOnlyText</key>
+	<false/>
 	<key>DisableFullscreenTransparency</key>
 	<true/>
 	<key>DisableTransparencyForKeyWindow</key>
@@ -251,9 +257,17 @@
 	<true/>
 	<key>EnableProxyIcon</key>
 	<false/>
+	<key>FlashTabBarInFullscreen</key>
+	<false/>
+	<key>HTMLTabTitles</key>
+	<true/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
 	<key>HideScrollbar</key>
+	<false/>
+	<key>HideTab</key>
+	<true/>
+	<key>HideTabNumber</key>
 	<false/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
@@ -815,6 +829,8 @@
 	<false/>
 	<key>OpenNoWindowsAtStartup</key>
 	<false/>
+	<key>PerPaneBackgroundImage</key>
+	<true/>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -848,16 +864,24 @@
 			<string>kNextWindowPointerAction</string>
 		</dict>
 	</dict>
+	<key>PreserveWindowSizeWhenTabBarVisibilityChanges</key>
+	<false/>
 	<key>PromptOnQuit</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
 	<true/>
+	<key>ShowPaneTitles</key>
+	<true/>
+	<key>ShowPaneTitlesEvenIfOnlyOnePane</key>
+	<false/>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
 	<real>0.20179687499999999</real>
 	<key>StatusBarPosition</key>
-	<integer>0</integer>
+	<integer>1</integer>
+	<key>StretchTabsToFillBar</key>
+	<true/>
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>5</integer>
 	<key>TabViewType</key>
