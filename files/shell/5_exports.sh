@@ -1,5 +1,6 @@
 export KUBE_CONFIG_PATH="${HOME}/.kube/config"
 export SOPS_AGE_KEY_FILE="${HOME}/.config/sops/age/keys.txt"
+export PNPM_CONFIG_NPMRC_AUTH_FILE=".npmrc"
 
 # --- Secrets Management (lazy loaded via `pass`) ---
 # Define secrets as "ENV_VAR:pass/path" pairs
