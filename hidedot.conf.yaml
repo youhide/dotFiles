@@ -19,6 +19,7 @@
     ~/.vimrc: ~/.dotFiles/files/vimrc
     ~/.npmrc: ~/.dotFiles/files/npmrc
     ~/.hushlogin: ~/.dotFiles/files/hushlogin
+    ~/.config/nvim: ~/.dotFiles/files/nvim
 
   # Clone git repositories
   git:
