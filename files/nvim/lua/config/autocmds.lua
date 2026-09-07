@@ -35,10 +35,14 @@ vim.g.autosave = false
 vim.api.nvim_create_autocmd("FocusLost", {
   group = augroup("autosave"),
   callback = function(event)
-    if not vim.g.autosave then return end
+    if not vim.g.autosave then
+      return
+    end
     local buf = event.buf
     if vim.bo[buf].modified and vim.bo[buf].buftype == "" and vim.api.nvim_buf_get_name(buf) ~= "" then
-      vim.api.nvim_buf_call(buf, function() vim.cmd("silent! write") end)
+      vim.api.nvim_buf_call(buf, function()
+        vim.cmd("silent! write")
+      end)
     end
   end,
 })
@@ -47,7 +51,9 @@ vim.api.nvim_create_autocmd("FocusLost", {
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   group = augroup("checktime"),
   callback = function()
-    if vim.o.buftype ~= "nofile" then vim.cmd("checktime") end
+    if vim.o.buftype ~= "nofile" then
+      vim.cmd("checktime")
+    end
   end,
 })
 
@@ -55,8 +61,15 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("close_with_q"),
   pattern = {
-    "help", "man", "qf", "lspinfo", "checkhealth", "startuptime",
-    "notify", "query", "gitsigns-blame",
+    "help",
+    "man",
+    "qf",
+    "lspinfo",
+    "checkhealth",
+    "startuptime",
+    "notify",
+    "query",
+    "gitsigns-blame",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
@@ -78,7 +91,9 @@ vim.api.nvim_create_autocmd("VimResized", {
 vim.api.nvim_create_autocmd("BufWritePre", {
   group = augroup("auto_mkdir"),
   callback = function(event)
-    if event.match:match("^%w%w+://") or vim.bo[event.buf].buftype ~= "" then return end
+    if event.match:match("^%w%w+://") or vim.bo[event.buf].buftype ~= "" then
+      return
+    end
     local file = vim.uv.fs_realpath(event.match) or event.match
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,

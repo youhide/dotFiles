@@ -15,9 +15,9 @@ return {
         return {
           -- Softer, less shouty diagnostics underline
           DiagnosticUnderlineError = { undercurl = true, sp = colors.red },
-          DiagnosticUnderlineWarn  = { undercurl = true, sp = colors.yellow },
-          DiagnosticUnderlineInfo  = { undercurl = true, sp = colors.cyan },
-          DiagnosticUnderlineHint  = { undercurl = true, sp = colors.cyan },
+          DiagnosticUnderlineWarn = { undercurl = true, sp = colors.yellow },
+          DiagnosticUnderlineInfo = { undercurl = true, sp = colors.cyan },
+          DiagnosticUnderlineHint = { undercurl = true, sp = colors.cyan },
           -- Keep the gutter the same shade as the editor background
           SignColumn = { bg = colors.bg },
           LineNr = { fg = colors.comment },

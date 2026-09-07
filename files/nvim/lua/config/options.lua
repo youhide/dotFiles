@@ -3,7 +3,7 @@ local opt = vim.opt
 -- Line numbers
 opt.number = true
 opt.relativenumber = true
-opt.signcolumn = "yes"        -- always reserve gutter, text never jumps
+opt.signcolumn = "yes" -- always reserve gutter, text never jumps
 opt.cursorline = true
 
 -- Indentation: 2 spaces, no tabs
@@ -16,7 +16,7 @@ opt.breakindent = true
 
 -- Search
 opt.ignorecase = true
-opt.smartcase = true          -- capital letter in query -> case sensitive
+opt.smartcase = true -- capital letter in query -> case sensitive
 opt.hlsearch = true
 opt.incsearch = true
 opt.grepprg = "rg --vimgrep --smart-case"
@@ -50,28 +50,28 @@ opt.termguicolors = true
 opt.scrolloff = 8
 opt.sidescrolloff = 8
 opt.wrap = false
-opt.showmode = false          -- lualine already shows it
-opt.laststatus = 3            -- one global statusline
+opt.showmode = false -- lualine already shows it
+opt.laststatus = 3 -- one global statusline
 opt.cmdheight = 1
 opt.pumheight = 12
-opt.winborder = "rounded"     -- nvim 0.11+: rounded floats everywhere
+opt.winborder = "rounded" -- nvim 0.11+: rounded floats everywhere
 opt.fillchars = { eob = " " }
 opt.list = true
 opt.listchars = { tab = "› ", trail = "·", nbsp = "␣", extends = "›", precedes = "‹" }
-opt.conceallevel = 2          -- render-markdown needs >= 2
+opt.conceallevel = 2 -- render-markdown needs >= 2
 opt.splitkeep = "screen"
-opt.shortmess:append("cCI")   -- no completion noise, no intro screen
+opt.shortmess:append("cCI") -- no completion noise, no intro screen
 
 -- Timing
 opt.updatetime = 200
 opt.timeoutlen = 400
 
 -- Behaviour
-opt.confirm = true            -- ask instead of failing on unsaved quit
+opt.confirm = true -- ask instead of failing on unsaved quit
 opt.autoread = true
 opt.completeopt = "menu,menuone,noselect"
 opt.virtualedit = "block"
-opt.inccommand = "split"      -- live preview of :substitute
+opt.inccommand = "split" -- live preview of :substitute
 opt.jumpoptions = "view"
 
 -- Folding via treesitter, but open by default
@@ -93,10 +93,14 @@ vim.g.loaded_python3_provider = 0
 local function nvm_bin()
   local nvm = vim.env.HOME .. "/.nvm"
   local alias = vim.fn.readfile(nvm .. "/alias/default")[1]
-  if not alias then return nil end
+  if not alias then
+    return nil
+  end
   -- alias may be "node", "lts/*" or a concrete version
   local dir = nvm .. "/versions/node/" .. alias .. "/bin"
-  if vim.fn.isdirectory(dir) == 1 then return dir end
+  if vim.fn.isdirectory(dir) == 1 then
+    return dir
+  end
   local versions = vim.fn.glob(nvm .. "/versions/node/*/bin", false, true)
   table.sort(versions)
   return versions[#versions]
@@ -109,7 +113,9 @@ local function prepend_path(dir)
 end
 
 local ok, bin = pcall(nvm_bin)
-if ok and bin then prepend_path(bin) end
+if ok and bin then
+  prepend_path(bin)
+end
 
 -- gopls and golangci-lint live here but the shell never puts it on PATH
 prepend_path(vim.env.HOME .. "/go/bin")

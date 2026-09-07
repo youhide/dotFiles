@@ -3,14 +3,18 @@
 -- discards changes and leaves nothing behind when it was the last file.
 local function close_buffer(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
-  if not vim.api.nvim_buf_is_valid(bufnr) then return end
+  if not vim.api.nvim_buf_is_valid(bufnr) then
+    return
+  end
 
   if vim.bo[bufnr].modified then
     local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":t")
-    local answer = vim.fn.confirm("Save changes to " .. (name ~= "" and name or "[No Name]") .. "?",
-      "&Yes\n&No\n&Cancel", 1)
+    local answer =
+      vim.fn.confirm("Save changes to " .. (name ~= "" and name or "[No Name]") .. "?", "&Yes\n&No\n&Cancel", 1)
     if answer == 1 then
-      vim.api.nvim_buf_call(bufnr, function() vim.cmd("write") end)
+      vim.api.nvim_buf_call(bufnr, function()
+        vim.cmd("write")
+      end)
     elseif answer ~= 2 then
       return
     end
@@ -97,9 +101,15 @@ return {
         indent = { with_expanders = true },
         git_status = {
           symbols = {
-            added = "", modified = "", deleted = "✖",
-            renamed = "󰁕", untracked = "", ignored = "",
-            unstaged = "󰄱", staged = "", conflict = "",
+            added = "",
+            modified = "",
+            deleted = "✖",
+            renamed = "󰁕",
+            untracked = "",
+            ignored = "",
+            unstaged = "󰄱",
+            staged = "",
+            conflict = "",
           },
         },
       },
@@ -120,8 +130,12 @@ return {
         diagnostics = "nvim_lsp",
         diagnostics_indicator = function(_, _, diag)
           local s = {}
-          if diag.error then s[#s + 1] = " " .. diag.error end
-          if diag.warning then s[#s + 1] = " " .. diag.warning end
+          if diag.error then
+            s[#s + 1] = " " .. diag.error
+          end
+          if diag.warning then
+            s[#s + 1] = " " .. diag.warning
+          end
           return table.concat(s, " ")
         end,
         separator_style = "slant",
@@ -187,8 +201,15 @@ return {
       scope = { enabled = true, show_start = false, show_end = false },
       exclude = {
         filetypes = {
-          "help", "neo-tree", "lazy", "mason", "notify",
-          "toggleterm", "checkhealth", "dashboard", "man",
+          "help",
+          "neo-tree",
+          "lazy",
+          "mason",
+          "notify",
+          "toggleterm",
+          "checkhealth",
+          "dashboard",
+          "man",
         },
       },
     },
@@ -202,14 +223,14 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
-      bigfile = { enabled = true },      -- disable heavy features on huge files
-      indent = { enabled = false },      -- indent-blankline handles this
-      input = { enabled = true },        -- nice vim.ui.input
+      bigfile = { enabled = true }, -- disable heavy features on huge files
+      indent = { enabled = false }, -- indent-blankline handles this
+      input = { enabled = true }, -- nice vim.ui.input
       notifier = { enabled = true, timeout = 2500 },
       quickfile = { enabled = true },
       scroll = { enabled = false },
       statuscolumn = { enabled = false },
-      words = { enabled = true },        -- highlight other refs of word under cursor
+      words = { enabled = true }, -- highlight other refs of word under cursor
       dashboard = {
         enabled = true,
         preset = {
@@ -226,7 +247,12 @@ return {
             { icon = " ", key = "n", desc = "New file", action = ":ene | startinsert" },
             { icon = " ", key = "g", desc = "Grep text", action = ":lua Snacks.dashboard.pick('live_grep')" },
             { icon = " ", key = "r", desc = "Recent files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-            { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+            {
+              icon = " ",
+              key = "c",
+              desc = "Config",
+              action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+            },
             { icon = " ", key = "s", desc = "Restore session", section = "session" },
             { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
             { icon = " ", key = "q", desc = "Quit", action = ":qa" },

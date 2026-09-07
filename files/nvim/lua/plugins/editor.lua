@@ -7,8 +7,10 @@ return {
     "christoomey/vim-tmux-navigator",
     lazy = false,
     cmd = {
-      "TmuxNavigateLeft", "TmuxNavigateDown",
-      "TmuxNavigateUp", "TmuxNavigateRight",
+      "TmuxNavigateLeft",
+      "TmuxNavigateDown",
+      "TmuxNavigateUp",
+      "TmuxNavigateRight",
     },
     keys = {
       { "<C-h>", "<cmd>TmuxNavigateLeft<cr>", desc = "Go to left split/pane" },
@@ -45,8 +47,7 @@ return {
         mc.lineAddCursor(-1)
       end, { desc = "Add cursor above" })
 
-      vim.keymap.set({ "n", "v" }, "<leader>ma", mc.matchAllAddCursors,
-        { desc = "Add cursor to all matches" })
+      vim.keymap.set({ "n", "v" }, "<leader>ma", mc.matchAllAddCursors, { desc = "Add cursor to all matches" })
 
       -- Esc clears the extra cursors
       mc.addKeymapLayer(function(layer)

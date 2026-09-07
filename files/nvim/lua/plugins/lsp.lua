@@ -96,9 +96,9 @@ return {
         signs = {
           text = {
             [vim.diagnostic.severity.ERROR] = " ",
-            [vim.diagnostic.severity.WARN]  = " ",
-            [vim.diagnostic.severity.INFO]  = " ",
-            [vim.diagnostic.severity.HINT]  = " ",
+            [vim.diagnostic.severity.WARN] = " ",
+            [vim.diagnostic.severity.INFO] = " ",
+            [vim.diagnostic.severity.HINT] = " ",
           },
         },
         underline = true,
@@ -141,17 +141,15 @@ return {
           nmap("gD", vim.lsp.buf.declaration, "Go to declaration")
           nmap("<leader>cr", vim.lsp.buf.rename, "Rename")
           nmap("<leader>ca", vim.lsp.buf.code_action, "Code action")
-          nmap("<F2>", vim.lsp.buf.rename, "Rename")           -- VSCode
-          nmap("<F12>", vim.lsp.buf.definition, "Definition")  -- VSCode
-          vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help,
-            { buffer = buf, desc = "Signature help" })
+          nmap("<F2>", vim.lsp.buf.rename, "Rename") -- VSCode
+          nmap("<F12>", vim.lsp.buf.definition, "Definition") -- VSCode
+          vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, { buffer = buf, desc = "Signature help" })
 
           -- Inlay hints, toggleable
           if client and client:supports_method("textDocument/inlayHint") then
             vim.lsp.inlay_hint.enable(true, { bufnr = buf })
             nmap("<leader>uh", function()
-              vim.lsp.inlay_hint.enable(
-                not vim.lsp.inlay_hint.is_enabled({ bufnr = buf }), { bufnr = buf })
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = buf }), { bufnr = buf })
             end, "Toggle inlay hints")
           end
 
@@ -159,10 +157,14 @@ return {
           if client and client:supports_method("textDocument/documentHighlight") then
             local hl = vim.api.nvim_create_augroup("youhide_lsp_hl", { clear = false })
             vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-              group = hl, buffer = buf, callback = vim.lsp.buf.document_highlight,
+              group = hl,
+              buffer = buf,
+              callback = vim.lsp.buf.document_highlight,
             })
             vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-              group = hl, buffer = buf, callback = vim.lsp.buf.clear_references,
+              group = hl,
+              buffer = buf,
+              callback = vim.lsp.buf.clear_references,
             })
           end
         end,

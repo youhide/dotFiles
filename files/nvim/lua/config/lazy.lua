@@ -2,9 +2,12 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
-    "git", "clone", "--filter=blob:none",
+    "git",
+    "clone",
+    "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", lazypath,
+    "--branch=stable",
+    lazypath,
   })
 end
 
@@ -19,8 +22,15 @@ require("lazy").setup({
   performance = {
     rtp = {
       disabled_plugins = {
-        "gzip", "tarPlugin", "tohtml", "tutor", "zipPlugin",
-        "netrwPlugin", "rplugin", "matchit", "matchparen",
+        "gzip",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+        "netrwPlugin",
+        "rplugin",
+        "matchit",
+        "matchparen",
       },
     },
   },
