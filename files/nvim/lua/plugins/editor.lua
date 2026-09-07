@@ -81,12 +81,141 @@ return {
   },
 
   -- ---------------------------------------------------------------
-  -- Surround: cs"' ds" ysiw"
+  -- Surround. Remapped onto the `gs` prefix so flash.nvim can own `s`:
+  -- gsaiw" surrounds a word, gsd" deletes, gsr"' replaces.
   -- ---------------------------------------------------------------
   {
     "echasnovski/mini.surround",
+    keys = {
+      { "gsa", desc = "Add surrounding", mode = { "n", "v" } },
+      { "gsd", desc = "Delete surrounding" },
+      { "gsf", desc = "Find surrounding (right)" },
+      { "gsF", desc = "Find surrounding (left)" },
+      { "gsh", desc = "Highlight surrounding" },
+      { "gsr", desc = "Replace surrounding" },
+      { "gsn", desc = "Update n_lines" },
+    },
+    opts = {
+      mappings = {
+        add = "gsa",
+        delete = "gsd",
+        find = "gsf",
+        find_left = "gsF",
+        highlight = "gsh",
+        replace = "gsr",
+        update_n_lines = "gsn",
+      },
+    },
+  },
+
+  -- ---------------------------------------------------------------
+  -- Jump anywhere on screen with two keystrokes: s<char><char>.
+  -- S jumps to a treesitter node instead.
+  -- ---------------------------------------------------------------
+  {
+    "folke/flash.nvim",
     event = "VeryLazy",
     opts = {},
+    keys = {
+      {
+        "s",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").jump()
+        end,
+        desc = "Flash",
+      },
+      {
+        "S",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").treesitter()
+        end,
+        desc = "Flash treesitter",
+      },
+      {
+        "r",
+        mode = "o",
+        function()
+          require("flash").remote()
+        end,
+        desc = "Remote flash",
+      },
+      {
+        "R",
+        mode = { "o", "x" },
+        function()
+          require("flash").treesitter_search()
+        end,
+        desc = "Treesitter search",
+      },
+      {
+        "<c-s>",
+        mode = { "c" },
+        function()
+          require("flash").toggle()
+        end,
+        desc = "Toggle flash search",
+      },
+    },
+  },
+
+  -- ---------------------------------------------------------------
+  -- Diagnostics / quickfix / symbols in one navigable list
+  -- ---------------------------------------------------------------
+  {
+    "folke/trouble.nvim",
+    version = "^3",
+    cmd = "Trouble",
+    opts = { modes = { lsp = { win = { position = "right" } } } },
+    keys = {
+      { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics" },
+      { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer diagnostics" },
+      { "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location list" },
+      { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix list" },
+      { "<leader>cs", "<cmd>Trouble symbols toggle<cr>", desc = "Symbols" },
+      { "<leader>cS", "<cmd>Trouble lsp toggle<cr>", desc = "LSP references / definitions" },
+    },
+  },
+
+  -- ---------------------------------------------------------------
+  -- Sessions per directory. Also what makes the snacks dashboard's
+  -- "Restore session" entry appear -- it probes for this plugin.
+  -- ---------------------------------------------------------------
+  {
+    "folke/persistence.nvim",
+    event = "BufReadPre",
+    opts = {},
+    keys = {
+      {
+        "<leader>qs",
+        function()
+          require("persistence").load()
+        end,
+        desc = "Restore session",
+      },
+      {
+        "<leader>ql",
+        function()
+          require("persistence").load({ last = true })
+        end,
+        desc = "Restore last session",
+      },
+      {
+        "<leader>qS",
+        function()
+          require("persistence").select()
+        end,
+        desc = "Select session",
+      },
+      {
+        "<leader>qd",
+        function()
+          require("persistence").stop()
+        end,
+        desc = "Don't save current session",
+      },
+    },
   },
 
   -- ---------------------------------------------------------------
@@ -132,8 +261,8 @@ return {
     version = "*",
     keys = {
       { [[<C-\>]], desc = "Toggle terminal" },
-      { "<leader>tt", "<cmd>ToggleTerm direction=float<cr>", desc = "Float terminal" },
-      { "<leader>th", "<cmd>ToggleTerm direction=horizontal<cr>", desc = "Split terminal" },
+      { "<leader>ot", "<cmd>ToggleTerm direction=float<cr>", desc = "Float terminal" },
+      { "<leader>oh", "<cmd>ToggleTerm direction=horizontal<cr>", desc = "Split terminal" },
     },
     opts = {
       open_mapping = [[<C-\>]],
@@ -153,6 +282,7 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = {
       { "<leader>ft", "<cmd>TodoTelescope<cr>", desc = "Find TODOs" },
+      { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo list" },
     },
     opts = {},
   },
