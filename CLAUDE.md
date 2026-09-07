@@ -44,13 +44,20 @@ Things that are easy to get wrong here:
   and `vim.g.autosave`. This is intentional; do not "fix" it.
 - **Debug adapters are not installed automatically.** First run needs
   `:DapInstall delve codelldb js python`.
+- **The GUI is Neovide** (`brew install --cask neovide-app`), opened by the `v`
+  shell function. It does not start Neovim from an interactive shell, so
+  `files/shell/4_paths.sh` never runs for it -- anything Neovim needs on `PATH`
+  goes through `prepend_path()` in `lua/config/options.lua`. Neovide-only
+  settings belong in `lua/config/gui.lua`, which returns early unless
+  `vim.g.neovide` is set.
 
 ### Keymaps
 
 There are two parallel sets: `Ctrl` works everywhere, `<D-...>` (Cmd) only
-inside the iTerm2 "Neovim" dynamic profile, which rewrites Cmd combos into
-CSI-u sequences. Cmd keys never survive tmux. Changing a `<D-...>` mapping
-usually means editing `files/iterm2/DynamicProfiles/nvim.json` too.
+inside Neovide, which passes macOS's Cmd combos straight through. A plain
+terminal never sends them, and they never survive tmux. `<D-c>`/`<D-v>`/`<D-x>`
+and the zoom keys live in `lua/config/gui.lua`, the rest in
+`lua/config/keymaps.lua`.
 
 Leader namespace, to avoid collisions:
 

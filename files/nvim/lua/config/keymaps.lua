@@ -1,8 +1,8 @@
 local map = vim.keymap.set
 
 -- ============================================================
---  VSCode / Sublime style (Ctrl). Cmd equivalents are mapped in
---  the iTerm2 "Neovim" dynamic profile, which sends these same keys.
+--  VSCode / Sublime style (Ctrl). The Cmd equivalents live further
+--  down and only reach Neovim inside Neovide.
 -- ============================================================
 
 -- Save (needs `stty -ixon`, set in files/shell/3_aliases.sh)
@@ -14,13 +14,14 @@ map("i", "<C-a>", "<Esc>ggVG", { desc = "Select all" })
 -- (vim's increment lives on <C-a>; it is still reachable via g<C-a> in visual)
 
 -- Comment. nvim 0.12 ships gc/gcc natively; these just add the VSCode key.
--- Terminals send Ctrl+/ as 0x1f (<C-_>); iTerm2 with CSI-u may send <C-/>.
+-- Terminals send Ctrl+/ as 0x1f (<C-_>); Neovide and CSI-u send <C-/>.
 map("n", "<C-_>", "gcc", { remap = true, desc = "Toggle comment" })
 map("v", "<C-_>", "gc", { remap = true, desc = "Toggle comment" })
 map("n", "<C-/>", "gcc", { remap = true, desc = "Toggle comment" })
 map("v", "<C-/>", "gc", { remap = true, desc = "Toggle comment" })
 
--- Move lines (Alt+Up/Down). Requires iTerm2 Option = Esc+.
+-- Move lines (Alt+Up/Down). Needs Option to act as Meta: iTerm2's
+-- "Option = Esc+", or neovide_input_macos_option_key_is_meta (config/gui.lua).
 map("n", "<A-Down>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
 map("n", "<A-Up>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
 map("i", "<A-Down>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move line down" })
@@ -85,7 +86,7 @@ map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Wider" })
 --  Buffers (bufferline)
 -- ============================================================
 -- <C-w> is left alone: it is vim's window prefix. Cmd+W closes a buffer
--- (mapped in the iTerm2 profile to <leader>bd).
+-- (<D-w>, below).
 map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
 map("n", "<leader>bd", function()
@@ -115,14 +116,13 @@ map("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Mason" })
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- ============================================================
---  Cmd (⌘) keys — iTerm2 "Neovim" profile only
+--  Cmd (⌘) keys — Neovide only
 --
---  The profile's Keyboard Map turns each ⌘ combo into a CSI-u escape
---  sequence with the "super" bit set (e.g. ⌘P -> ESC[112;9u). nvim 0.12
---  decodes that as <D-p>, so these work in a plain terminal -- no GUI
---  needed. They do NOT work through tmux (tmux has no super bit), which
---  is fine: the profile launches nvim directly. Use the Ctrl keys there.
---  ⌘C / ⌘V are deliberately unmapped so iTerm2 keeps native copy/paste.
+--  Neovide hands macOS's ⌘ combos straight to Neovim as <D-...>. A plain
+--  terminal never sends them, so in tmux or a normal iTerm2 tab use the
+--  Ctrl set above. Open a Neovide window with `v` (files/shell/9_functions.sh).
+--  ⌘C / ⌘V / ⌘X and the zoom keys live in config/gui.lua, next to the rest
+--  of the GUI setup.
 -- ============================================================
 map({ "n", "i", "v", "s" }, "<D-s>", "<Esc><cmd>write<cr>", { desc = "Save file" })
 map({ "n", "i", "v" }, "<D-p>", "<Esc><cmd>Telescope find_files<cr>", { desc = "Find file" })

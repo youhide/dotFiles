@@ -20,8 +20,6 @@
     ~/.npmrc: ~/.dotFiles/files/npmrc
     ~/.hushlogin: ~/.dotFiles/files/hushlogin
     ~/.config/nvim: ~/.dotFiles/files/nvim
-    # iTerm2 profile used by the `v` function (nvim in its own window)
-    "~/Library/Application Support/iTerm2/DynamicProfiles/nvim.json": ~/.dotFiles/files/iterm2/DynamicProfiles/nvim.json
 
   # Clone git repositories
   git:

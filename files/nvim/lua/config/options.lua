@@ -112,6 +112,13 @@ local function prepend_path(dir)
   end
 end
 
+-- Neovide spawns nvim directly, with no shell at all, so ~/.zshrc -- and
+-- files/shell/4_paths.sh with it -- never runs. Launched from Spotlight or the
+-- Dock, nvim would have no Homebrew on PATH: no rg, fd, lazygit, tree-sitter.
+-- These come first so the nvm bin below still wins for node.
+prepend_path("/usr/local/bin")
+prepend_path("/opt/homebrew/bin")
+
 local ok, bin = pcall(nvm_bin)
 if ok and bin then
   prepend_path(bin)

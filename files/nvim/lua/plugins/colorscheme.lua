@@ -4,7 +4,7 @@ return {
     lazy = false,
     priority = 1000, -- load before everything else
     opts = {
-      -- Match the iTerm2 Dracula profile exactly
+      -- Match the Dracula background used by the terminal profile
       colors = {
         bg = "#1e1f29",
       },

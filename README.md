@@ -23,7 +23,7 @@ hidedot            # apply
 | `tmux.conf` | Tmux configuration (Dracula, TPM, true color) |
 | `vimrc` | Vim configuration (fallback for `sudo vi`) |
 | `nvim/` | Neovim configuration (lazy.nvim, Dracula, LSP) |
-| `iterm2/` | iTerm2 dynamic profile for the `v` launcher |
+| `iterm2/` | iTerm2 preferences backup (not symlinked) |
 | `npmrc` | NPM registries config |
 | `hushlogin` | Suppress login banner |
 
@@ -43,9 +43,9 @@ hidedot            # apply
 
 ## Neovim
 
-Lua config in `files/nvim/`, symlinked to `~/.config/nvim`. Dracula theme
-matching the iTerm2 profile, LSP for TypeScript/Rust/Go/Python/web, treesitter
-highlighting, telescope, git signs and VSCode-style keybindings.
+Lua config in `files/nvim/`, symlinked to `~/.config/nvim`. Dracula theme,
+LSP for TypeScript/Rust/Go/Python/web, treesitter highlighting, telescope, git
+signs and VSCode-style keybindings. `v` opens it in a Neovide window.
 
 | File | Purpose |
 |---|---|
@@ -53,6 +53,7 @@ highlighting, telescope, git signs and VSCode-style keybindings.
 | `lua/config/options.lua` | Editor options (clipboard, mouse, indent, undo) |
 | `lua/config/keymaps.lua` | Ctrl and Cmd shortcuts, leader mappings |
 | `lua/config/autocmds.lua` | Yank highlight, cursor restore, optional autosave on focus lost (off by default: `:lua vim.g.autosave = true`) |
+| `lua/config/gui.lua` | Neovide only: font, padding, animations, Cmd+C/V, zoom |
 | `lua/config/lazy.lua` | Plugin manager bootstrap |
 | `lua/plugins/*.lua` | One file per area (lsp, completion, telescope, ui, ...) |
 | `lua/plugins/dap.lua` | Debugging (Go, Rust, Python, JS/TS) |
@@ -64,9 +65,9 @@ highlighting, telescope, git signs and VSCode-style keybindings.
 
 ### Shortcuts
 
-`Ctrl` works everywhere. `Cmd` works in the dedicated "Neovim" iTerm2 profile
-(opened by `v`), because the profile translates it into escape sequences that
-Neovim understands. Inside tmux, use `Ctrl`.
+`Ctrl` works everywhere. `Cmd` works in Neovide (opened by `v`), which hands
+macOS's ⌘ combos straight to Neovim. In a terminal tab or inside tmux, use
+`Ctrl`.
 
 ```
 Ctrl+P  / Cmd+P             find file       Ctrl+S / Cmd+S   save
@@ -93,12 +94,14 @@ Leader groups:
 <Space>m  multicursor         <Space>x  diagnostics  <Space>M  Mason
 ```
 
-`Cmd+C` / `Cmd+V` stay iTerm2's native copy and paste.
+`Cmd+C` / `Cmd+V` / `Cmd+X` are mapped in `lua/config/gui.lua`, along with
+`Cmd+=` / `Cmd+-` / `Cmd+0` for zoom.
 
 ### Requirements beyond Neovim 0.12
 
 ```bash
 brew install ripgrep fd lazygit tree-sitter-cli bat
+brew install --cask neovide-app         # the GUI `v` opens
 brew install --cask claude-code@latest  # for <Space>a
 ```
 
@@ -132,13 +135,13 @@ gco   → git checkout     glog  → git log (pretty)
 tf    → terraform        tg    → terragrunt
 cat   → bat              reload → source ~/.zshrc
 dotfiles → cd ~/.dotFiles  ip  → public IP
-ports → listening ports    v     → nvim in a new iTerm2 window
+ports → listening ports    v     → Neovim (Neovide) in its own window
 ```
 
 ### `v` — Neovim in its own window
 
-Works like `code .`: opens Neovim in a new iTerm2 window using the dedicated
-"Neovim" profile (Dracula, no transparency, Cmd keys enabled).
+Works like `code .`: opens Neovim in a [Neovide](https://neovide.dev) window
+(160x44, JetBrainsMono 13, Cmd keys enabled).
 
 ```bash
 v              # current directory
@@ -173,6 +176,7 @@ _SECRET_ENTRIES=(
 - [pass](https://www.passwordstore.org/) (for secrets)
 - [Homebrew](https://brew.sh/)
 - [Neovim](https://neovim.io/) 0.12+
+- [Neovide](https://neovide.dev) — `brew install --cask neovide-app` (the `v` launcher)
 - [TPM](https://github.com/tmux-plugins/tpm) — `git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm`
 
 `files/iterm2/com.googlecode.iterm2.plist` is a backup of the full iTerm2

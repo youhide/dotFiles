@@ -32,7 +32,7 @@ return {
       local mc = require("multicursor-nvim")
       mc.setup()
 
-      -- <C-d> in the terminal, <D-d> in the iTerm2 "Neovim" profile.
+      -- <C-d> in the terminal, <D-d> in Neovide.
       for _, key in ipairs({ "<C-d>", "<D-d>" }) do
         vim.keymap.set({ "n", "v" }, key, function()
           mc.matchAddCursor(1)

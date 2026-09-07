@@ -75,13 +75,17 @@ function extract() {
   esac
 }
 
-# Open Neovim in its own iTerm2 window, using the dedicated "Neovim" profile
-# (Dracula, no transparency, Cmd keys wired up). Works like `code .`.
+# Open Neovim in its own window, through Neovide. Works like `code .`.
 #   v              -> current directory
 #   v .            -> current directory
 #   v src/app.ts   -> that file, cwd = its directory
 #   v ~/Git/foo    -> that directory
 function v() {
+  if ! command -v neovide &>/dev/null; then
+    print -u2 "v: neovide not found -- brew install --cask neovide-app"
+    return 1
+  fi
+
   local target="${1:-.}" dir file
   if [[ -d "$target" ]]; then
     dir="${target:A}"; file=""
@@ -90,39 +94,11 @@ function v() {
   fi
   [[ -d "$dir" ]] || { print -u2 "v: no such directory: $dir"; return 1 }
 
-  # iTerm2 only rereads DynamicProfiles when the directory itself changes, and
-  # ours is a symlink into the dotfiles. If the profile went missing, nudge the
-  # directory and give iTerm2 a moment before giving up.
-  local dp="$HOME/Library/Application Support/iTerm2/DynamicProfiles"
-  if ! /usr/bin/defaults read com.googlecode.iterm2 "New Bookmarks" 2>/dev/null \
-       | grep -q "Name = Neovim;"; then
-    touch "$dp" 2>/dev/null
-    sleep 1
-  fi
-
-  # The session is a login shell (the profile sets no custom command), so this
-  # line is parsed by zsh -- ${(q)} quoting handles spaces and quotes in paths.
-  # `exec` replaces the shell with nvim, so closing nvim closes the window.
-  local line="cd ${(q)dir} && exec nvim"
-  if [[ -n "$file" ]]; then
-    line+=" -- ${(q)file}"
-  else
-    line+=" ."
-  fi
-
-  osascript - "$line" >/dev/null <<'OSA' || {
-on run argv
-  tell application "iTerm2"
-    activate
-    set w to (create window with profile "Neovim")
-    tell current session of w to write text (item 1 of argv)
-  end tell
-end run
-OSA
-    print -u2 "v: could not open the 'Neovim' iTerm2 profile."
-    print -u2 "   Restart iTerm2 (it reloads profiles on launch), or check:"
-    print -u2 "   $dp/nvim.json"
-    return 1
-  }
+  # --fork detaches, so the prompt comes back instead of waiting for the
+  # window to close (neovide blocks by default). --grid keeps the 160x44 the
+  # old iTerm2 profile forced, and --no-tabs stops neovide from appending `-p`.
+  # Everything after `--` goes straight to nvim, so `.` still opens the
+  # directory in neo-tree (see plugins/ui.lua, which keys off argv(0)).
+  neovide --fork --no-tabs --grid=160x44 --chdir "$dir" -- "${file:-.}"
 }
 compdef _files v 2>/dev/null
