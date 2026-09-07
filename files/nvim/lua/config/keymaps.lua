@@ -28,9 +28,11 @@ map("i", "<A-Up>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move line up" })
 map("v", "<A-Down>", ":m '>+1<cr>gv=gv", { desc = "Move selection down" })
 map("v", "<A-Up>", ":m '<-2<cr>gv=gv", { desc = "Move selection up" })
 
--- Duplicate line (VSCode: Shift+Alt+Down)
-map("n", "<A-S-Down>", "<cmd>t.<cr>", { desc = "Duplicate line" })
-map("v", "<A-S-Down>", ":t'><cr>gv", { desc = "Duplicate selection" })
+-- Duplicate line (VSCode: Shift+Alt+Down / Shift+Alt+Up)
+map("n", "<A-S-Down>", "<cmd>t.<cr>", { desc = "Duplicate line down" })
+map("v", "<A-S-Down>", ":t'><cr>gv", { desc = "Duplicate selection down" })
+map("n", "<A-S-Up>", "<cmd>t .-1<cr>", { desc = "Duplicate line up" })
+map("v", "<A-S-Up>", ":t'<-1<cr>gv", { desc = "Duplicate selection up" })
 
 -- Indent without losing the selection
 map("v", "<Tab>", ">gv", { desc = "Indent" })
@@ -49,6 +51,9 @@ map("n", "n", "nzzzv", { desc = "Next match (centered)" })
 map("n", "N", "Nzzzv", { desc = "Prev match (centered)" })
 map("n", "<C-u>", "<C-u>zz", { desc = "Half page up" })
 map("n", "<C-f>", "<C-f>zz", { desc = "Page down" })
+-- <C-d> is spent on multicursor (plugins/editor.lua), so half-page-down lives
+-- on <A-d> instead.
+map({ "n", "v" }, "<A-d>", "<C-d>zz", { desc = "Half page down" })
 -- <C-b> is NOT mapped here: it belongs to the file explorer (plugins/ui.lua).
 -- Page up is <C-u> / <PageUp>.
 
@@ -83,7 +88,9 @@ map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Wider" })
 -- (mapped in the iTerm2 profile to <leader>bd).
 map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
-map("n", "<leader>bd", "<cmd>lua require('bufferline').unpin_and_close()<cr>", { desc = "Close buffer" })
+map("n", "<leader>bd", function()
+  require("util.buffer").close_buffer()
+end, { desc = "Close buffer" })
 map("n", "<leader>bo", "<cmd>BufferLineCloseOthers<cr>", { desc = "Close other buffers" })
 map("n", "<leader>bp", "<cmd>BufferLineTogglePin<cr>", { desc = "Pin buffer" })
 
@@ -102,7 +109,9 @@ end, { desc = "Next diagnostic" })
 --  Misc
 -- ============================================================
 map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
-map("n", "<leader>m", "<cmd>Mason<cr>", { desc = "Mason" })
+-- <leader>m is the multicursor group prefix (plugins/editor.lua); a direct
+-- mapping there would stall every <leader>m* for 'timeoutlen'.
+map("n", "<leader>M", "<cmd>Mason<cr>", { desc = "Mason" })
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- ============================================================
@@ -121,7 +130,10 @@ map({ "n", "i", "v" }, "<D-P>", "<Esc><cmd>Telescope commands<cr>", { desc = "Co
 map({ "n", "i", "v" }, "<D-F>", "<Esc><cmd>Telescope live_grep<cr>", { desc = "Grep project" })
 map("n", "<D-f>", "/", { desc = "Search in file" })
 map({ "n", "i", "v" }, "<D-b>", "<Esc><cmd>Neotree toggle<cr>", { desc = "Toggle explorer" })
-map({ "n", "i", "v" }, "<D-w>", "<Esc><cmd>lua require('bufferline').unpin_and_close()<cr>", { desc = "Close buffer" })
+map({ "n", "i", "v" }, "<D-w>", function()
+  vim.cmd("stopinsert")
+  require("util.buffer").close_buffer()
+end, { desc = "Close buffer" })
 map("n", "<D-a>", "ggVG", { desc = "Select all" })
 map("i", "<D-a>", "<Esc>ggVG", { desc = "Select all" })
 map("n", "<D-z>", "u", { desc = "Undo" })

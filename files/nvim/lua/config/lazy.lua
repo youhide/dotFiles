@@ -16,7 +16,10 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = { { import = "plugins" } },
   install = { colorscheme = { "dracula" } },
-  checker = { enabled = true, notify = false },
+  -- Auto-checking rewrites lazy-lock.json inside the dotfiles working tree, which
+  -- leaves the repo permanently dirty. Update deliberately with :Lazy update and
+  -- commit the lockfile.
+  checker = { enabled = false, notify = false },
   change_detection = { notify = false },
   ui = { border = "rounded" },
   performance = {

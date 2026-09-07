@@ -43,9 +43,13 @@ return {
         mc.matchSkipCursor(1)
       end, { desc = "Skip this match" })
 
-      vim.keymap.set({ "n", "v" }, "<A-S-Up>", function()
+      vim.keymap.set({ "n", "v" }, "<leader>mk", function()
         mc.lineAddCursor(-1)
       end, { desc = "Add cursor above" })
+
+      vim.keymap.set({ "n", "v" }, "<leader>mj", function()
+        mc.lineAddCursor(1)
+      end, { desc = "Add cursor below" })
 
       vim.keymap.set({ "n", "v" }, "<leader>ma", mc.matchAllAddCursors, { desc = "Add cursor to all matches" })
 
@@ -72,7 +76,7 @@ return {
   },
   {
     "windwp/nvim-ts-autotag",
-    ft = { "html", "javascriptreact", "typescriptreact", "vue", "svelte", "xml", "markdown" },
+    ft = { "html", "javascriptreact", "typescriptreact", "xml", "markdown" },
     opts = {},
   },
 
@@ -94,14 +98,27 @@ return {
     opts = {
       preset = "helix",
       spec = {
+        { "<leader>a", group = "ai" },
         { "<leader>b", group = "buffer" },
         { "<leader>c", group = "code" },
+        { "<leader>d", group = "debug" },
+        { "<leader>dp", group = "python" },
         { "<leader>f", group = "find" },
         { "<leader>g", group = "git" },
         { "<leader>h", group = "hunk" },
         { "<leader>m", group = "multicursor" },
+        { "<leader>o", group = "open" },
+        { "<leader>q", group = "session" },
+        { "<leader>t", group = "test" },
         { "<leader>u", group = "toggle" },
         { "<leader>w", group = "window" },
+        { "<leader>x", group = "diagnostics" },
+        { "<leader>e", desc = "Toggle explorer" },
+        { "<leader>E", desc = "Reveal current file" },
+        { "<leader>l", desc = "Lazy" },
+        { "<leader>M", desc = "Mason" },
+        { "<leader>|", desc = "Split right" },
+        { "<leader>-", desc = "Split below" },
       },
     },
   },
