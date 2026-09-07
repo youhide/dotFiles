@@ -52,9 +52,15 @@ highlighting, telescope, git signs and VSCode-style keybindings.
 | `init.lua` | Leader + module bootstrap |
 | `lua/config/options.lua` | Editor options (clipboard, mouse, indent, undo) |
 | `lua/config/keymaps.lua` | Ctrl and Cmd shortcuts, leader mappings |
-| `lua/config/autocmds.lua` | Yank highlight, cursor restore, autosave on focus lost |
+| `lua/config/autocmds.lua` | Yank highlight, cursor restore, optional autosave on focus lost (off by default: `:lua vim.g.autosave = true`) |
 | `lua/config/lazy.lua` | Plugin manager bootstrap |
 | `lua/plugins/*.lua` | One file per area (lsp, completion, telescope, ui, ...) |
+| `lua/plugins/dap.lua` | Debugging (Go, Rust, Python, JS/TS) |
+| `lua/plugins/test.lua` | Test runner (neotest) |
+| `lua/plugins/rust.lua` | Rust via rustaceanvim (owns rust-analyzer) |
+| `lua/plugins/ai.lua` | Claude Code in the editor |
+| `lua/plugins/git.lua` | gitsigns, lazygit, diffview |
+| `lua/util/buffer.lua` | Shared buffer-close helper |
 
 ### Shortcuts
 
@@ -67,10 +73,24 @@ Ctrl+P  / Cmd+P             find file       Ctrl+S / Cmd+S   save
 Ctrl+Shift+F / Cmd+Shift+F  grep project    Ctrl+/ / Cmd+/   comment
 Ctrl+B  / Cmd+B             file explorer   Ctrl+A / Cmd+A   select all
 Ctrl+D  / Cmd+D             multi-cursor    Ctrl+\           terminal
-Alt+Up/Down                 move line       Shift+H/Shift+L  prev/next buffer
+Alt+Up/Down                 move line       Alt+Shift+Up/Dn  duplicate line
+Alt+D                       half page down  Shift+H/Shift+L  prev/next buffer
 Ctrl+h/j/k/l                move across nvim splits and tmux panes
+s / S                       jump anywhere (flash) / to a treesitter node
+gs a d r f h                surround: gsaiw" wraps a word, gsd" unwraps
 gd  K  grn  gra  grr        definition, hover, rename, code action, references
+F5 F9 F10 F11               debug: continue, breakpoint, step over, step into
 <Space>                     leader - press it to see every mapping (which-key)
+```
+
+Leader groups:
+
+```
+<Space>a  ai (Claude Code)    <Space>d  debug        <Space>q  session
+<Space>b  buffer              <Space>f  find         <Space>t  test
+<Space>c  code                <Space>g  git          <Space>u  toggle
+<Space>o  open (terminal)     <Space>h  git hunk     <Space>w  window
+<Space>m  multicursor         <Space>x  diagnostics  <Space>M  Mason
 ```
 
 `Cmd+C` / `Cmd+V` stay iTerm2's native copy and paste.
@@ -79,7 +99,17 @@ gd  K  grn  gra  grr        definition, hover, rename, code action, references
 
 ```bash
 brew install ripgrep fd lazygit tree-sitter-cli bat
+brew install --cask claude-code@latest  # for <Space>a
 ```
+
+Debug adapters are fetched once, on demand:
+
+```vim
+:DapInstall delve codelldb js python
+```
+
+`lazy-lock.json` is committed and updated deliberately with `:Lazy update` --
+lazy's auto-checker is disabled so the repo does not go dirty on its own.
 
 `ripgrep` is required for project search, and `tree-sitter-cli` for building
 treesitter parsers. Node comes from nvm -- Neovim puts it on `PATH` itself,
