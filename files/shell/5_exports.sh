@@ -84,3 +84,9 @@ if [[ -d "${BREW_PREFIX:-}/opt/nvm" ]]; then
     pnpm() { _load_nvm; pnpm "$@"; }
   fi
 fi
+
+# --- Editor ---
+export EDITOR="nvim"
+export VISUAL="nvim"
+export SUDO_EDITOR="nvim"
+export MANPAGER="nvim +Man!"

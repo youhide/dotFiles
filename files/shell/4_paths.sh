@@ -22,3 +22,6 @@ else
   fi
   unset _python_base
 fi
+
+# Go tools (gopls, golangci-lint) install here
+[[ -d "$HOME/go/bin" ]] && PATH="$HOME/go/bin:$PATH"
