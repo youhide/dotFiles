@@ -47,4 +47,34 @@ return {
       { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
     },
   },
+
+  -- ---------------------------------------------------------------
+  -- Diffs, file history, and 3-way conflict resolution.
+  -- The merge tool IS the conflict resolver: opening a conflicted file
+  -- during a merge/rebase gives <leader>co/ct/cb/ca (ours/theirs/base/all),
+  -- cO/cT/cB/cA for the whole file, dx to drop a region, and [x / ]x to
+  -- navigate. Those are buffer-local, so <leader>ca (code action) is
+  -- shadowed inside merge buffers only.
+  -- ---------------------------------------------------------------
+  {
+    "sindrets/diffview.nvim",
+    cmd = {
+      "DiffviewOpen",
+      "DiffviewClose",
+      "DiffviewFileHistory",
+      "DiffviewToggleFiles",
+      "DiffviewFocusFiles",
+    },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      enhanced_diff_hl = true,
+      view = { merge_tool = { layout = "diff3_mixed" } },
+    },
+    keys = {
+      { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "Diffview open" },
+      { "<leader>gD", "<cmd>DiffviewClose<cr>", desc = "Diffview close" },
+      { "<leader>gf", "<cmd>DiffviewFileHistory %<cr>", desc = "File history (this file)" },
+      { "<leader>gF", "<cmd>DiffviewFileHistory<cr>", desc = "File history (branch)" },
+    },
+  },
 }
