@@ -32,15 +32,8 @@ local servers = {
   emmet_language_server = {},
 
   -- Systems
-  rust_analyzer = {
-    settings = {
-      ["rust-analyzer"] = {
-        cargo = { allFeatures = true },
-        check = { command = "clippy" },
-        inlayHints = { closingBraceHints = { enable = false } },
-      },
-    },
-  },
+  -- rust_analyzer is deliberately absent: rustaceanvim (plugins/rust.lua)
+  -- owns it, and configuring it here too would attach two clients.
   gopls = {
     settings = {
       gopls = {
@@ -121,7 +114,10 @@ return {
       require("mason").setup({ ui = { border = "rounded" } })
       require("mason-lspconfig").setup({
         ensure_installed = vim.tbl_keys(servers),
-        automatic_enable = true,
+        -- Dropping rust_analyzer from `servers` above is not enough: the mason
+        -- package is still installed, and automatic_enable turns on every
+        -- installed server. rustaceanvim starts it itself.
+        automatic_enable = { exclude = { "rust_analyzer" } },
       })
 
       -- ---------- on attach ----------
