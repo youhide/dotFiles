@@ -17,6 +17,25 @@ local function neighbour(bufnr)
   return after or before
 end
 
+-- What a window should show when there is no file left to put in it: the
+-- dashboard, the same thing a bare `nvim` and `v .` start on. Its buffer is
+-- unlisted, so the tabline goes empty -- a plain empty buffer here would be
+-- listed and sit in the tabline as a `[No Name]` tab whose X can never close
+-- it, since closing it only ever creates the next one.
+function M.show_empty(win)
+  local ok, dashboard = pcall(function()
+    return Snacks.dashboard.open({ win = win })
+  end)
+  if ok and dashboard and vim.api.nvim_buf_is_valid(dashboard.buf) then
+    return dashboard.buf
+  end
+
+  -- snacks missing or disabled: an unlisted but still editable buffer.
+  local buf = vim.api.nvim_create_buf(false, false)
+  vim.api.nvim_win_set_buf(win, buf)
+  return buf
+end
+
 -- Closing a buffer must never take Neovim down with it, and must not throw
 -- away unsaved work. bufferline's default is a bare `bdelete!`, which force-
 -- discards changes and leaves nothing behind when it was the last file.
@@ -47,11 +66,15 @@ function M.close_buffer(bufnr)
   -- with neo-tree's close_if_last_window that took the whole session down:
   -- the file window closed, the tree was left as the last window, closed
   -- itself, and Neovim exited. So give those windows another buffer first --
-  -- a fresh empty one when this was the last file open.
-  local replacement = neighbour(bufnr) or vim.api.nvim_create_buf(true, false)
+  -- the dashboard when this was the last file open.
+  local replacement = neighbour(bufnr)
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     if vim.api.nvim_win_get_buf(win) == bufnr then
-      vim.api.nvim_win_set_buf(win, replacement)
+      if replacement then
+        vim.api.nvim_win_set_buf(win, replacement)
+      else
+        replacement = M.show_empty(win)
+      end
     end
   end
 
