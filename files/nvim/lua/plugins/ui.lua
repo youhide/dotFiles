@@ -1,5 +1,17 @@
 local close_buffer = require("util.buffer").close_buffer
 
+-- A listed, unnamed, untouched buffer -- the empty shell Neovim is left
+-- holding when something replaces the buffer it started in.
+local function is_empty_buffer(buf)
+  return vim.api.nvim_buf_is_loaded(buf)
+    and vim.bo[buf].buflisted
+    and vim.bo[buf].buftype == ""
+    and not vim.bo[buf].modified
+    and vim.api.nvim_buf_get_name(buf) == ""
+    and vim.api.nvim_buf_line_count(buf) == 1
+    and vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1] == ""
+end
+
 return {
   -- ---------------------------------------------------------------
   -- File explorer (Ctrl+B)
@@ -16,16 +28,44 @@ return {
     -- `nvim <dir>` must show the tree. netrw is disabled, so without this the
     -- directory just opens as an empty unnamed buffer.
     init = function()
-      if vim.fn.argc(-1) == 1 then
-        local path = vim.fn.argv(0)
-        local stat = vim.uv.fs_stat(path)
-        if stat and stat.type == "directory" then
-          -- Make the directory the working dir, like `code .` does, so
-          -- Ctrl+P, grep and the LSP root all point at the project.
-          vim.cmd.cd(vim.fn.fnameescape(path))
-          require("neo-tree")
-        end
+      if vim.fn.argc(-1) ~= 1 then
+        return
       end
+      local path = vim.fn.argv(0)
+      local stat = vim.uv.fs_stat(path)
+      if not (stat and stat.type == "directory") then
+        return
+      end
+
+      -- Make the directory the working dir, like `code .` does, so Ctrl+P,
+      -- grep and the LSP root all point at the project.
+      vim.cmd.cd(vim.fn.fnameescape(path))
+      require("neo-tree")
+
+      -- Hijacking the directory buffer leaves a *listed* empty buffer behind,
+      -- which bufferline then shows as a "[No Name]" tab on every `v .`.
+      -- Snacks skips its own dashboard here (argc is 1), so put the dashboard
+      -- in that window by hand and wipe the leftover: its buffer is unlisted,
+      -- so the tabline starts empty, the way it does for a bare `nvim`.
+      vim.api.nvim_create_autocmd("VimEnter", {
+        once = true,
+        nested = true,
+        callback = function()
+          vim.schedule(function()
+            local buf = vim.fn.bufnr("$")
+            for b = 1, buf do
+              if is_empty_buffer(b) then
+                for _, win in ipairs(vim.api.nvim_list_wins()) do
+                  if vim.api.nvim_win_get_buf(win) == b then
+                    Snacks.dashboard.open({ win = win })
+                  end
+                end
+                pcall(vim.api.nvim_buf_delete, b, { force = true })
+              end
+            end
+          end)
+        end,
+      })
     end,
     keys = {
       { "<C-b>", "<cmd>Neotree toggle<cr>", desc = "Toggle explorer" },
