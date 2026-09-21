@@ -40,6 +40,8 @@ end
 -- has been dropped. So the hijack is off (`hijack_netrw_behavior` below) and
 -- this replaces it: the directory buffer's window gets the dashboard, the
 -- buffer goes, and the tree opens on that directory.
+local starting_project = false
+
 local function open_directory_buffers()
   local dir
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -49,19 +51,48 @@ local function open_directory_buffers()
     end
   end
   if dir then
+    starting_project = true
     vim.cmd("Neotree focus dir=" .. vim.fn.fnameescape(dir))
+  end
+end
+
+-- `nvim <file>` does not always come up on that file: under Neovide, with the
+-- `--fork` the `v` shell function uses, Neovim stays on the empty buffer it
+-- started with and merely loads the file behind it, so both sit in the
+-- tabline and the window shows the empty one. Put the file in the window.
+local function show_file_argument()
+  if vim.fn.argc(-1) ~= 1 then
+    return
+  end
+  local path = vim.fn.fnamemodify(vim.fn.argv(0), ":p")
+  if vim.fn.isdirectory(path) == 1 then
+    return
+  end
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_get_name(buf) == path then
+      starting_project = true
+      local win = vim.api.nvim_get_current_win()
+      if vim.api.nvim_win_get_buf(win) ~= buf then
+        vim.api.nvim_win_set_buf(win, buf)
+      end
+      return
+    end
   end
 end
 
 -- Dropping the directory buffer can leave a blank one in its place, and when
 -- that happens is a matter of how fast the UI comes up: under Neovide it can
 -- turn up after the sweep above has already run. So this runs a few times
--- while the project is coming up. It is idempotent, and it only ever fires
--- during startup -- a blank buffer later on is one that was asked for. The
--- mode check is for the dashboard's `n` (New file), which makes exactly such
--- a buffer and leaves insert mode behind.
+-- while the project is coming up. It is idempotent.
+--
+-- It only runs once a project is actually up -- a directory opened in the
+-- tree, or the file argument put in its window. A blank buffer at any other
+-- time is one someone asked for, and sweeping the one Neovim is still about
+-- to put a file into would leave that file open but off screen. The mode
+-- check is for the dashboard's `n` (New file), which makes exactly such a
+-- buffer and leaves insert mode behind.
 local function sweep_blank_buffers()
-  if vim.fn.mode() ~= "n" then
+  if not starting_project or vim.fn.mode() ~= "n" then
     return
   end
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -108,6 +139,7 @@ return {
         callback = function()
           vim.schedule(function()
             open_directory_buffers()
+            show_file_argument()
             sweep_blank_buffers()
             vim.defer_fn(sweep_blank_buffers, 100)
             vim.defer_fn(sweep_blank_buffers, 400)
